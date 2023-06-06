@@ -1,0 +1,656 @@
+/***Creating tables***/
+
+create table customer ( customer_id number not null ,cust_name varchar2(40) not null, age number not null, phone_number number not null);
+create table car (car_id number not null,customer_id number not null, model number not null,plates_number varchar2(40) not null);
+create table repair_car (technical_id number not null,car_id number not null );
+create table technical (technical_id number not null,name varchar2(40) not null,salary number not null);
+create table service_paper(service_id number not null,technical_id number not null ,car_id number not null );
+create table spare_parts ( part_id number not null,spare_name varchar2(40) not null ,price number not null  );
+create table sales (sales_id number not null,NAM_of_sales varchar2(40) not null , sales_salary number not null);
+create table colour_of_car(car_id number not null,colour varchar2(40));
+create table payment(payment_id number not null ,sales_id number not null, payment_type varchar2(40) not null , service_id number not null ,customer_id number not null );
+create table use_parts( part_id number not null ,technical_id number not null);
+
+
+/**Altering tables***/
+
+ALTER TABLE customer ADD PRIMARY KEY (customer_id);
+ALTER TABLE customer
+ADD email varchar(255);
+ALTER TABLE customer
+DROP COLUMN age;
+ALTER TABLE customer
+ADD b_date  date;
+
+ALTER TABLE car ADD PRIMARY KEY (car_id);
+ALTER TABLE car ADD FOREIGN KEY (customer_id) REFERENCES customer(customer_id);
+
+ALTER TABLE repair_car ADD FOREIGN KEY (technical_id) REFERENCES technical(technical_id);
+ALTER TABLE repair_car ADD FOREIGN KEY (car_id) REFERENCES car(car_id);
+
+
+ALTER TABLE technical ADD PRIMARY KEY (technical_id);
+ALTER TABLE service_paper ADD PRIMARY KEY (service_id );
+ALTER TABLE service_paper ADD FOREIGN KEY (technical_id) REFERENCES technical(technical_id);
+ALTER TABLE service_paper ADD FOREIGN KEY (car_id) REFERENCES car(car_id);
+ALTER TABLE service_paper
+ADD to_be_paid number;
+ALTER TABLE service_paper
+drop column to_be_paid;
+
+ALTER TABLE spare_parts ADD PRIMARY KEY (part_id);
+ALTER TABLE sales ADD PRIMARY KEY (sales_id);
+alter table colour_of_car ADD PRIMARY KEY (colour);
+ALTER TABLE colour_of_car ADD FOREIGN KEY (car_id) REFERENCES car(car_id);
+ 
+alter table payment ADD PRIMARY KEY (payment_id,sales_id );
+ALTER TABLE payment ADD FOREIGN KEY (sales_id) REFERENCES sales(sales_id);
+ALTER TABLE payment ADD FOREIGN KEY (service_id) REFERENCES service_paper(service_id);
+ALTER TABLE payment ADD FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
+
+ 
+ALTER TABLE use_parts ADD FOREIGN KEY (part_id) REFERENCES spare_parts(part_id);
+ALTER TABLE use_parts ADD FOREIGN KEY (technical_id) REFERENCES technical(technical_id);
+ ------------------------------------------------------------
+
+/***customer table***/
+insert into customer values(1 ,'mohamed mosleh' ,01023432792,'Ali_Ahmad@live.com', date '2000-5-6');
+insert into Customer values(2 ,'Aafreen Kader' ,01022458545,'Aafreen_Kader@live.com' , date '2000-1-1');
+insert into Customer values(3 ,'Sadiq Arshad' ,01022458545,'Sadiq_Arshad@live.com' , date '2000-5-6');
+insert into Customer values(4 ,'Ghazi Haq' ,01022458545,'Ghazi_Haq@live.com' , date '2005-9-11');
+
+insert into Customer values(5 ,'Ghayda Karam' ,01022458545,'Ghayda_Karam@live.com' , date '1999-6-12');
+insert into Customer values(6 ,'Jerick Safar' ,01022458545,'Jerick_Safar@live.com' , date '2003-1-1');
+insert into Customer values(7 ,'Abdullah Muhammad' ,01022458545,'Abdullahi_Muhammad@live.com' , date '1998-1-9');
+insert into Customer values(8 ,'Qasiba Mourad' ,01022458545,'Qasiba_Mourad@live.com' , date '2001-8-1');
+insert into Customer values(9 ,'Wahid Srour' ,01022458545,'Wahid_Srour@live.com' , date '2003-1-12');
+insert into Customer values(10 ,'Zeena Mahmood' ,01022458545,'Zeena_Mahmood@live.com' , date '2002-1-7');
+
+insert into Customer values(11 ,'Mahmud Shaban' ,01022458545,'Mahmud_Shaban@live.com' , date '2004-9-1');
+insert into Customer values(12 ,'Ahsan Ramin' ,01022458545,'Ahsan_Ramin@live.com' , date '2006-6-7');
+insert into Customer values(13 ,'Jihad Asmar' ,01022458545,'Jihad_Asmar@live.com' , date '2005-9-12');
+insert into Customer values(14 ,'Wali Halim' ,01022458545,'Wali_Halim@live.com' , date '2003-1-1');
+insert into Customer values(15 ,'Hamal Adel' ,01022458545,'Hamal_Adel@live.com' , date '2001-9-1');
+insert into Customer values(16 ,'Riham Siddiqi' ,01022458545,'Riham_Siddiqi@live.com' , date '2003-12-11');
+insert into Customer values(17 ,'Fatin Sadri' ,01022458545,'Fatin_Sadri@live.com' , date '2006-10-9');
+insert into Customer values(18 ,'Nasra Amen' ,01022458545,'Nasra_Amen@live.com' , date '2005-1-1');
+insert into Customer values(19 ,'Fadi Faris' ,01022458545,'Fadi_Faris@live.com' , date '2009-10-12');
+insert into Customer values(20 ,'Timin Nazir' ,01022458545,'Timin_Nazir@live.com' , date '2004-10-11');
+
+insert into Customer values(21 ,'Nadim Elbaz' ,01022458545,'Nadim_Elbaz@live.com' , date '2006-5-1');
+insert into Customer values(22 ,'Radwan Khan' ,01022458545,'Radwan_Khan@live.com' , date '2001-1-2');
+insert into Customer values(23 ,'Abbas Zadeh' ,01022458545,'Abbas_Zadeh@live.com' , date '2003-6-1');
+insert into Customer values(24 ,'Rawdah Taha' ,01022458545,'Rawdah_Taha@live.com' , date '2001-11-11');
+insert into Customer values(25 ,'Muhsin Nazir' ,01022458545,'Muhsin_Nazir@live.com' , date '2003-3-10');
+insert into Customer values(26 ,'Malik Aziz' ,01022458545,'Malik_Aziz@live.com' , date '2004-4-5');
+insert into Customer values(27 ,'Mustafa Ammar' ,01022458545,'Mustafa_Ammar@live.com' , date '2002-9-9');
+insert into Customer values(28 ,'Zahia Jabbar' ,01022458545,'Zahia_Jabbar@live.com' , date '2006-11-12');
+insert into Customer values(29 ,'Yasin Mansoor' ,01022458545,'Yasin_Mansoor@live.com' , date '2007-9-6');
+insert into Customer values(30 ,'Qamar Sultan' ,01022458545,'Qamar_Sultan@live.com' , date '2009-6-9');
+
+insert into Customer values(31 ,'Samia Jama' ,01022458545,'Samia_Jama@live.com' , date '2006-5-1');
+insert into Customer values(32 ,'Nuha Salman' ,01022458545,'Nuha_Salman@live.com' , date '2005-5-9');
+insert into Customer values(33 ,'Shakir Tariq' ,01022458545,'Shakir_Tariq@live.com' , date '2003-3-11');
+insert into Customer values(34 ,'Basel Hamady' ,01022458545,'Basel_Hamady@live.com' , date '2005-12-9');
+insert into Customer values(35 ,'Raziqa Amiri' ,01022458545,'Raziqa_Amiri@live.com' , date '2000-1-1');
+insert into Customer values(36 ,'Yamana Sadri' ,01022458545,'Yamana_Sadri@live.com' , date '2006-6-11');
+insert into Customer values(37 ,'Nuha Ismail' ,01022458545,'Nuha_Ismail@live.com' , date '2005-9-11');
+insert into Customer values(38 ,'Hatim Moussa' ,01022458545,'Hatim_Moussa@live.com' , date '2008-4-8');
+insert into Customer values(39 ,'Siraj Allee' ,01022458545,'Siraj_Allee@live.com' , date '2001-12-3');
+insert into Customer values(40 ,'Kalid Abed' ,01022458545,'Kalid_Abed@live.com' , date '2006-9-12');
+
+insert into Customer values(41 ,'Shareef Nagi' ,01022458545,'Shareef_Nagi@live.com' , date '2005-9-7');
+insert into Customer values(42 ,'Fanan Shahan' ,01022458545,'Fanan_Shahan@live.com' , date '2003-5-12');
+insert into Customer values(43 ,'Yahya Baddour' ,01022458545,'Yahya_Baddour@live.com' , date '2004-6-9');
+insert into Customer values(44 ,'Lattef Abdalla' ,01022458545,'Lattef_Abdalla@live.com' , date '2003-4-4');
+insert into Customer values(45 ,'Muhammad Masri' ,01022458545,'Muhammad_Masri@live.com' , date '2008-2-9');
+insert into Customer values(46 ,'Rabah Habeeb' ,01022458545,'Rabah_Habeeb@live.com' , date '2006-3-9');
+insert into Customer values(47 ,'Yasin Fahmy' ,01022458545,'Yasin_Fahmy@live.com' , date '2009-9-8');
+insert into Customer values(48 ,'Sameer Mina' ,01022458545,'Sameer_Mina@live.com' , date '2007-7-3');
+insert into Customer values(49 ,'Nasra Shaban' ,01022458545,'Nasra_Shaban@live.com' , date '2000-9-7');
+insert into Customer values(50 ,'Najib Radi' ,01022458545,'Najib_Radi@live.com' , date '2003-10-6');
+
+select* from customer
+
+/***car table***/
+insert into car values(1 ,1 ,2003,' عنب 123');
+insert into car values(2 ,3 ,2014,' عسب 444');
+insert into car values(3 ,2 ,2012,' عنع 785');
+insert into car values(4 ,2 ,2010,' ينب 524');
+insert into car values(5 ,2 ,2001,'ةنب 148');
+insert into car values(6 ,5 ,2009,' اوه 625');
+insert into car values(7  ,7 ,2019,' واو 252');
+insert into car values(8 ,8 ,2020,' جود 412');
+insert into car values(9 ,20 ,2011,' جوب 999');
+insert into car values(10 ,9 ,2077,' نيس 286');
+insert into car values(11 ,5 ,2088,' مو 784');
+insert into car values(12 ,5 ,2039,' صلا 115');
+insert into car values(13 ,7 ,2022,' نور 225');
+insert into car values(14 ,9 ,2005,' عين 114');
+insert into car values(15 ,10 ,2007,' قوي 445');
+insert into car values(16 ,15 ,2017,' اوي 498');
+insert into car values(17 ,11 ,20014,' ثاب 678');
+insert into car values(18 ,10 ,2009,' شصض 734');
+insert into car values(19 ,17 ,2007,' سشق 850');
+insert into car values(20 ,19 ,1999,' فعن 427');
+insert into car values(21 ,22 ,2003,' عنب 123');
+insert into car values(22,33 ,2018,' ثبس 234');
+insert into car values(23 ,32 ,2012,' صىت 163');
+insert into car values(24 ,25 ,2007,' سوف 941');
+insert into car values(25 ,26 ,2009,'هعل 851');
+insert into car values(26 ,42 ,2003,' يصق 980');
+insert into car values(27  ,47 ,2008,' حعت 486');
+insert into car values(28 ,43 ,2004,' ضلب 742');
+insert into car values(29 ,41 ,2006,' بفت 954');
+insert into car values(30 ,39 ,1980,' تنم 356');
+insert into car values(31 ,40 ,1985,'ثبق 486');
+insert into car values(32 ,16 ,1967,' صؤل 290');
+ insert into car values(33 ,14 ,2021,' قبس 423');
+insert into car values(34 ,15 ,1977,' تنت 330');
+insert into car values(35 ,5 ,1975,' شؤر 500');
+insert into car values(36 ,16 ,1994,' فال 845');
+insert into car values(37 ,4 ,2002,' شعغ 523');
+insert into car values(38 ,6 ,2001,' جطس 750');
+insert into car values(39 ,2 ,1977,' لتن 750');
+insert into car values(40 ,18 ,1982,' يقب 627');
+insert into car values(41 ,40 ,1985,'ثبق 486');
+insert into car values(42 ,12 ,1976,' غفل 621');
+insert into car values(43 ,35 ,2019,' بلن 825');
+insert into car values(44 ,37 ,2014,' صبق 845');
+insert into car values(45 ,38 ,1988,' ك 360');
+insert into car values(46 ,37 ,1984,' خنت 523');
+insert into car values(47 ,3 ,1979,' خمن 909');
+insert into car values(48 ,49 ,2006,' شغف 207');
+insert into car values(49 ,48 ,1976,' قير 555');
+insert into car values(50 ,50 ,1900,' ومن 111');
+select *from car
+
+/***technical table***/
+insert into technical values(1 ,'mohamed mosleh' ,2500);
+insert into Technical values(2 ,'Aafreen Kader' ,2000);
+insert into Technical values(3 ,'Sadiq Arshad' ,1000);
+insert into Technical values(4 ,'Ghazi Haq' ,3000);
+
+insert into Technical values(5 ,'Ghayda Karam' ,4000);
+insert into Technical values(6 ,'Jerick Safar' ,2000);
+insert into Technical values(7 ,'Abdullah Muhammad' ,2400);
+insert into Technical values(8 ,'Qasiba Mourad' ,3000);
+insert into Technical values(9 ,'Wahid Srour' ,1000);
+insert into Technical values(10 ,'Zeena Mahmood' ,4400);
+
+insert into Technical values(11 ,'Mahmud Shaban' ,1000);
+insert into Technical values(12 ,'Ahsan Ramin' ,3000);
+insert into Technical values(13 ,'Jihad Asmar' ,4000);
+insert into Technical values(14 ,'Wali Halim' ,8000);
+insert into Technical values(15 ,'Hamal Adel' ,1000);
+insert into Technical values(16 ,'Riham Siddiqi' ,2000);
+insert into Technical values(17 ,'Fatin Sadri' ,3000);
+insert into Technical values(18 ,'Nasra Amen' ,1200);
+insert into Technical values(19 ,'Fadi Faris' ,1300);
+insert into Technical values(20 ,'Timin Nazir' ,1242);
+
+insert into Technical values(21 ,'Nadim Elbaz' ,4200);
+insert into Technical values(22 ,'Radwan Khan' ,3255);
+insert into Technical values(23 ,'Abbas Zadeh' ,1222);
+insert into Technical values(24 ,'Rawdah Taha' ,7444);
+insert into Technical values(25 ,'Muhsin Nazir' ,1444);
+insert into Technical values(26 ,'Malik Aziz' ,5555);
+insert into Technical values(27 ,'Mustafa Ammar' ,9999);
+insert into Technical values(28 ,'Zahia Jabbar' ,2222);
+insert into Technical values(29 ,'Yasin Mansoor' ,1111);
+insert into Technical values(30 ,'Qamar Sultan' ,3333);
+
+insert into Technical values(31 ,'Samia Jama' ,6666);
+insert into Technical values(32 ,'Nuha Salman' ,8848);
+insert into Technical values(33 ,'Shakir Tariq' ,5555);
+insert into Technical values(34 ,'Basel Hamady' ,8888);
+insert into Technical values(35 ,'Raziqa Amiri' ,7777);
+insert into Technical values(36 ,'Yamana Sadri' ,2144);
+insert into Technical values(37 ,'Nuha Ismail' ,2144);
+insert into Technical values(38 ,'Hatim Moussa' ,5220);
+insert into Technical values(39 ,'Siraj Allee' ,1110);
+insert into Technical values(40 ,'Kalid Abed' ,3544);
+insert into Technical values(41 ,'karim alaa' ,3534);
+insert into Technical values(42 ,'Kalid mahmoud' ,4620);
+insert into Technical values(43 ,'hady mohamed' ,1240);
+insert into Technical values(44 ,'osama khalid' ,7400);
+insert into Technical values(45 ,'ziad mahmoud' ,3480);
+insert into Technical values(46 ,'fathy mohamed' ,4870);
+insert into Technical values(47 ,'mohamed fathy' ,6420);
+insert into Technical values(48 ,'islam mohamed' ,5540);
+insert into Technical values(49 ,'mostafa mohamed' ,1487);
+insert into Technical values(50 ,'Kahmed mohamed' ,6540);
+select *from technical
+
+
+ /***spare_parts table***/
+insert into spare_parts values(1 ,'bonnet' ,2500);
+insert into spare_parts values(2 ,'springs' ,250);
+insert into spare_parts values(3 ,'hinges' ,600);
+insert into spare_parts values(4 ,'radiator' ,3000);
+insert into spare_parts values(5 ,'roof rack' ,4000);
+insert into spare_parts values(6 ,'spoiler' ,1500);
+insert into spare_parts values(7 ,'tire' ,250);
+insert into spare_parts values(8 ,'doos' ,2000);
+insert into spare_parts values(9 ,'outer door handle' ,350);
+insert into spare_parts values(10 ,'inner door handle' ,300);
+insert into spare_parts values(11 ,'window motor' ,1100);
+insert into spare_parts values(12 ,'door latch ' ,750);
+insert into spare_parts values(13 ,'central-locking' ,2000);
+insert into spare_parts values(14 ,'cameras' ,4000);
+insert into spare_parts values(15 ,'backup camera' ,2000);
+insert into spare_parts values(16 ,'digital camera' ,2500);
+insert into spare_parts values(17 ,'battery' ,3000);
+insert into spare_parts values(18 ,'battery box' ,1000);
+insert into spare_parts values(19 ,'battery cable' ,1200);
+insert into spare_parts values(20 ,'battery control system ' ,3500);
+insert into spare_parts values(21 ,'battery plate' ,1000);
+insert into spare_parts values(22 ,'ammeter' ,300);
+insert into spare_parts values(23 ,'fuel gauge' ,150);
+insert into spare_parts values(24 ,'odometer' ,600);
+insert into spare_parts values(25 ,'spedometer' ,700);
+insert into spare_parts values(26,'ignition system' ,2500);
+insert into spare_parts values(27,'spotlight' ,4500);
+insert into spare_parts values(28 ,'headlight' ,3500);
+insert into spare_parts values(29 ,'intrior light' ,1500);
+insert into spare_parts values(30 ,'sensors' ,6000);
+insert into spare_parts values(31 ,'engine' ,8000);
+insert into spare_parts values(32 ,'gearbox' ,9000);
+
+select *from spare_parts
+
+  /***sales table***/
+insert into sales values(1 ,'karim alaa',1000 );
+insert into sales values(2 ,'osama khalid ',1200 );
+insert into sales values(3 ,'mosleh',5421 );
+insert into sales values(4 ,'mohamed ahmed',6420 );
+insert into sales values(5 ,'mohamed alaa',4613 );
+insert into sales values(6 ,'mohamed ali',5210 );
+insert into sales values(7 ,'mohamed nabil',7650 );
+insert into sales values(8 ,'bassam hisham',5520 );
+insert into sales values(9 ,'youssef mohamed',5500 );
+insert into sales values(10 ,'mohamed hany',4310 );
+insert into sales values(11 ,'ahmed mosleh',6400 );
+insert into sales values(12 ,'nora ali',7400 );
+insert into sales values(13 ,'nada mohamed',8000 );
+insert into sales values(14 ,'ghada adel',4600 );
+insert into sales values(15 ,'fatma mostafa',4250 );
+insert into sales values(16 ,'abdelrhman mohamed',5500 );
+insert into sales values(17 ,'tata hany',7650 );
+insert into sales values(18 ,'ream mostafa',6420 );
+insert into sales values(19 ,'tara emad',8420 );
+insert into sales values(20 ,'huda el mufti',9000 );
+insert into sales values(21 ,'yousra mohamed',9420 );
+insert into sales values(22 ,'hend mohamed',4820 );
+insert into sales values(23 ,'hend sabri',7610 );
+insert into sales values(24 ,'karim alaa',5480 );
+insert into sales values(25 ,'youssef obama',67740 );
+insert into sales values(26 ,'emam ashour',3842 );
+insert into sales values(27 ,'mohamed salah',2920 );
+insert into sales values(28 ,'karim mohsen',2470 );
+insert into sales values(29 ,'ziad yasser',2400);
+insert into sales values(30 ,'mahmoud ali',2500);
+insert into sales values(31 ,'ziad mahmoud',3400);
+insert into sales values(32 ,'mohamed alaa',5000);
+insert into sales values(33,'karim mohsen',6000);
+insert into sales values(34 ,'ali mohamed',5400);
+insert into sales values(35 ,'nora yasser',5000);
+insert into sales values(36 ,'malak mohamed',4100);
+insert into sales values(37 ,'youssef mahmoud ',3400);
+insert into sales values(38 ,'mahmoud wahed',8000);
+insert into sales values(39 ,'mohamed hany ',7400);
+insert into sales values(40 ,'seif mohamed',6300);
+insert into sales values(41 ,'amr mohamed',4800);
+insert into sales values(42 ,'amr ziad',4700);
+insert into sales values(43 ,'mariam amr',5000);
+insert into sales values(44 ,'mohamed ahmed',3100);
+insert into sales values(45 ,'ahmed mahmoud',2200);
+insert into sales values(46 ,'osama mohamed',5842);
+insert into sales values(47,'mostafa mohamed',6840);
+insert into sales values(48 ,'tara mohamed',4600);
+insert into sales values(49 ,'mohamed ziad',5042);
+insert into sales values(50 ,'karim mohamed',6420);
+
+
+
+select *from sales
+
+ /***color of cars table***/
+insert into colour_of_car values(1 ,'light white');
+insert into colour_of_car values(2 ,' blue');
+insert into colour_of_car values(3 ,' red');
+insert into colour_of_car values(4 ,' brown');
+insert into colour_of_car values(5 ,' purple');
+insert into colour_of_car values(6 ,' red blue ');
+insert into colour_of_car values(7  ,' yellow ');
+insert into colour_of_car values(8 ,' nesc ');
+insert into colour_of_car values(9 ,' avocado ');
+insert into colour_of_car values(10 ,' baby blue ');
+insert into colour_of_car values(11 ,' white blie ');
+insert into colour_of_car values(12 ,' black coffe ');
+insert into colour_of_car values(13 ,' blue jeans ');
+insert into colour_of_car values(14 ,' blue violet ');
+insert into colour_of_car values(15 ,' bright green ');
+insert into colour_of_car values(16 ,' gold ');
+insert into colour_of_car values(17 ,' silver ');
+insert into colour_of_car values(18 ,' bronze ');
+insert into colour_of_car values(19 ,' platinum');
+insert into colour_of_car values(20 ,' diamond');
+insert into colour_of_car values(21 ,' cafe');
+insert into colour_of_car values(22 ,' chocolate');
+insert into colour_of_car values(23 ,' foushya');
+insert into colour_of_car values(24 ,' copper ');
+insert into colour_of_car values(25  ,' copper red ');
+insert into colour_of_car values(26 ,' yellow blue ');
+insert into colour_of_car values(27 ,' cyan ');
+insert into colour_of_car values(28 ,'   brown drak ');
+insert into colour_of_car values(29 ,'   cyan ');
+insert into colour_of_car values(30 ,' nesc coffee ');
+insert into colour_of_car values(31 ,' deep blue ');
+insert into colour_of_car values(32 ,' forrest green ');
+insert into colour_of_car values(33 ,'  fushia ');
+insert into colour_of_car values(34 ,' gray ');
+insert into colour_of_car values(35 ,' violet ');
+insert into colour_of_car values(36 ,' gold ');
+insert into colour_of_car values(37 ,' violet ');
+insert into colour_of_car values(38 ,' white smooth ');
+insert into colour_of_car values(39 ,' black coffe ');
+insert into colour_of_car values(40 ,'  jeans blue ');
+insert into colour_of_car values(41 ,'  violet blue ');
+insert into colour_of_car values(42 ,'  bright green ');
+insert into colour_of_car values(43 ,' vilot ');
+insert into colour_of_car values(43 ,' orange ');
+insert into colour_of_car values(44 ,'  orange dark ');
+insert into colour_of_car values(45 ,' reryne');
+insert into colour_of_car values(46 ,' deep sky blue');
+insert into colour_of_car values(47 ,' cypher');
+insert into colour_of_car values(48 ,' green');
+insert into colour_of_car values(49 ,' balck');
+insert into colour_of_car values(50 ,' cacac ' );
+select * from colour_of_car
+
+ /***service_paper table***/
+INSERT INTO SERVICE_PAPER VALUES(1, 2 ,2);
+INSERT INTO SERVICE_PAPER VALUES( 2 , 2, 3 );
+INSERT INTO SERVICE_PAPER VALUES( 3 , 4 ,2);  
+INSERT INTO SERVICE_PAPER VALUES( 4 , 14,5 );
+INSERT INTO SERVICE_PAPER VALUES( 5 , 15 ,6);
+INSERT INTO SERVICE_PAPER VALUES( 6 , 17 ,2);
+INSERT INTO SERVICE_PAPER VALUES( 7 , 3 ,8);
+INSERT INTO SERVICE_PAPER VALUES( 8 , 18 ,2);
+INSERT INTO SERVICE_PAPER VALUES( 9 , 29,20 );
+INSERT INTO SERVICE_PAPER VALUES( 10 , 11,4 );
+INSERT INTO SERVICE_PAPER VALUES( 11 , 24,7 );
+INSERT INTO SERVICE_PAPER VALUES( 12 , 22,5 );
+INSERT INTO SERVICE_PAPER VALUES( 13 , 33,7 );
+INSERT INTO SERVICE_PAPER VALUES( 14 , 5,7 );
+INSERT INTO SERVICE_PAPER VALUES( 15 , 6,9 );
+INSERT INTO SERVICE_PAPER VALUES( 16 , 26,4 );
+INSERT INTO SERVICE_PAPER VALUES( 17 , 37,7 );
+INSERT INTO SERVICE_PAPER VALUES( 18 , 48,16 );
+INSERT INTO SERVICE_PAPER VALUES( 19 , 39,17 );
+INSERT INTO SERVICE_PAPER VALUES( 20 , 20,22 );
+INSERT INTO SERVICE_PAPER VALUES( 21 , 31,4 );
+INSERT INTO SERVICE_PAPER VALUES( 22 , 42,32 );
+INSERT INTO SERVICE_PAPER VALUES( 23 , 13,12 );
+INSERT INTO SERVICE_PAPER VALUES( 24 , 44,14 );
+INSERT INTO SERVICE_PAPER VALUES( 25 , 45,12 );
+INSERT INTO SERVICE_PAPER VALUES( 26 , 6,28 );
+INSERT INTO SERVICE_PAPER VALUES( 27 , 7,29 );
+INSERT INTO SERVICE_PAPER VALUES( 28 , 38,27 );
+INSERT INTO SERVICE_PAPER VALUES( 29 , 29,21 );
+INSERT INTO SERVICE_PAPER VALUES( 30 , 30,2 );
+INSERT INTO SERVICE_PAPER VALUES( 31 , 1,22 );
+INSERT INTO SERVICE_PAPER VALUES( 32 , 2,20 );
+INSERT INTO SERVICE_PAPER VALUES( 33 , 31,23 );
+INSERT INTO SERVICE_PAPER VALUES( 34 , 41,31 );
+INSERT INTO SERVICE_PAPER VALUES( 35 , 35,14 );
+INSERT INTO SERVICE_PAPER VALUES( 36 , 7,15 );
+INSERT INTO SERVICE_PAPER VALUES( 37 , 37,24 );
+INSERT INTO SERVICE_PAPER VALUES( 38 , 8,29 );
+INSERT INTO SERVICE_PAPER VALUES( 39 , 9,24 );
+INSERT INTO SERVICE_PAPER VALUES( 40 , 10,28 );
+INSERT INTO SERVICE_PAPER VALUES( 41 , 30,17 );
+INSERT INTO SERVICE_PAPER VALUES( 42 , 38 ,27);
+INSERT INTO SERVICE_PAPER VALUES( 43 , 41,27 );
+INSERT INTO SERVICE_PAPER VALUES( 44 , 44,25 );
+INSERT INTO SERVICE_PAPER VALUES( 45 , 47,29 );
+INSERT INTO SERVICE_PAPER VALUES( 46 , 34,2 );
+INSERT INTO SERVICE_PAPER VALUES( 47 , 22,4 );
+INSERT INTO SERVICE_PAPER VALUES( 48 , 28,29 );
+INSERT INTO SERVICE_PAPER VALUES( 49 , 29,15 );
+INSERT INTO SERVICE_PAPER VALUES( 50 , 50,5 );
+select * from service_paper
+
+
+ /** use_parts table****/
+ 
+insert into use_parts values(1,7);
+insert into use_parts values(2,9);
+insert into use_parts values(2,2);
+insert into use_parts values(4,5);
+insert into use_parts values(4,6);
+insert into use_parts values(6,2);
+insert into use_parts values(6,8);
+insert into use_parts values(8,2); 
+insert into use_parts values(9,20);
+insert into use_parts values(10,4);   
+insert into use_parts values(11,7);
+insert into use_parts values(7,5);
+insert into use_parts values(5,7);
+insert into use_parts values(6,7);
+insert into use_parts values(8,9); 
+insert into use_parts values(1,4);
+insert into use_parts values(22,7);
+insert into use_parts values(9,16);
+insert into use_parts values(16,17);
+insert into use_parts values(19,22);       
+insert into use_parts values(3,4);
+insert into use_parts values(26,32);
+insert into use_parts values(31,12);
+insert into use_parts values(12,14);
+insert into use_parts values(14,12);
+insert into use_parts values(18,28);
+insert into use_parts values(19,29);        
+insert into use_parts values(14,27);
+insert into use_parts values(11,21);
+insert into use_parts values(19,2);         
+insert into use_parts values(20,22);
+insert into use_parts values(22,20);
+insert into use_parts values(30,23);
+insert into use_parts values(25,31);
+insert into use_parts values(24,14);
+insert into use_parts values(21,15);
+insert into use_parts values(15,24);
+insert into use_parts values(14,29);
+insert into use_parts values(19,24);            
+insert into use_parts values(29,28);
+insert into use_parts values(8,17);  
+insert into use_parts values(19,27);      
+insert into use_parts values(21,27);
+insert into use_parts values(16,25);
+insert into use_parts values(18,29);
+insert into use_parts values(32,2);
+insert into use_parts values(7,4);
+insert into use_parts values(5,29);
+insert into use_parts values(2,15);
+insert into use_parts values(16,5);
+insert into use_parts values(7,9);
+select *from use_parts
+
+ /** repair_car table****/
+
+
+insert into repair_car values(1,2);
+insert into repair_car values(2,3);
+insert into repair_car values(2,2);
+insert into repair_car values(2,5);
+insert into repair_car values(2,6);
+insert into repair_car values(6,2);
+insert into repair_car values(6,8);
+insert into repair_car values(8,2); 
+insert into repair_car values(9,20);
+insert into repair_car values(10,4);   
+insert into repair_car values(11,7);
+insert into repair_car values(7,5);
+insert into repair_car values(5,7);
+insert into repair_car values(6,7);
+insert into repair_car values(8,9); 
+insert into repair_car values(1,4);
+insert into repair_car values(22,7);
+insert into repair_car values(9,16);
+insert into repair_car values(16,17);
+insert into repair_car values(19,22);       
+insert into repair_car values(3,4);
+insert into repair_car values(26,32);
+insert into repair_car values(31,12);
+insert into repair_car values(12,14);
+insert into repair_car values(14,12);
+insert into repair_car values(18,28);
+insert into repair_car values(19,29);        
+insert into repair_car values(14,27);
+insert into repair_car values(11,21);
+insert into repair_car values(19,2);         
+insert into repair_car values(20,22);
+insert into repair_car values(22,20);
+insert into repair_car values(30,23);
+insert into repair_car values(25,31);
+insert into repair_car values(24,14);
+insert into repair_car values(21,15);
+insert into repair_car values(15,24);
+insert into repair_car values(14,29);
+insert into repair_car values(19,24);            
+insert into repair_car values(29,28);
+insert into repair_car values(8,17);  
+insert into repair_car values(19,27);      
+insert into repair_car values(21,27);
+insert into repair_car values(16,25);
+insert into repair_car values(18,29);
+insert into repair_car values(32,2);
+insert into repair_car values(7,4);
+insert into repair_car values(5,29);
+insert into repair_car values(2,15);
+insert into repair_car values(16,5);
+  /** payment table **/
+
+insert into payment values(1,2,'visa',1,1);
+insert into payment values(2,2,'visa',2,2);
+insert into payment values(3,4,'visa',3.3);
+insert into payment values(4,17,'visa',4,4);
+insert into payment values(5,16,'visa',5,5);
+insert into payment values(6,3,'visa',6,6);
+insert into payment values(7,18,'cash',7,7);
+insert into payment values(8,20,'visa',8,8);
+insert into payment values(9,22,'cash',9,9);
+insert into payment values(10,24,'visa',10,10);
+insert into payment values(11,29,'visa',11,11);
+insert into payment values(12,15,'visa',12,12);
+insert into payment values(13,25,'cash',13,13);
+insert into payment values(14,39,'cash',14,14);
+insert into payment values(15,41,'cash',15,15);
+insert into payment values(16,42,'cash',16,16);
+insert into payment values(17,48,'cash',17,17);
+insert into payment values(18,50,'cash',18,18);
+insert into payment values(19,14,'cash',19,19);
+insert into payment values(20,26,'visa',20,20);
+insert into payment values(21,27,'cash',21,21);
+ 
+
+
+
+/**  quyres **/
+ 
+/*  quyre  that joing table to get car info*/
+select c.CUSTOMER_ID,d.CUST_NAME,d.PHONE_NUMBER,c.CAR_ID,d.COLOUR,c.PLATES_NUMBER
+from customer d full outer join car c
+on  c.customer_id=d.customer_id   
+inner join colour_of_car d
+on d.car_id = c.car_id
+ order by d.customer_id
+------------------------------------------------------------
+/*  quyre aggr. that get average of saliries of technicals  */
+
+select   TECHNICAL_ID	,  NAME,SALARY  
+from technical 
+where salary  >(select avg(salary) from technical )  
+order by TECHNICAL_ID;
+-------------------------------------------------------------
+/*  --select technical who didnt work -- */
+SELECT technical_id    FROM  technical WHERE technical_id   not IN (SELECT technical_id FROM service_paper)
+ MINUS 
+SELECT technical_id    FROM  technical WHERE technical_id  not IN (SELECT technical_id FROM technical)
+
+ -----------------------------------------------------------------------------
+
+/*  --count paying type  -- */
+select  payment_type,count(payment_type) from payment   group by (payment_type);
+
+ ------------------------------------------------------
+5th query 
+------------------------------------------------------
+ /*  --joining between tables and print the total to be paid for the cust and show cars who didnt want spare parts  -- */
+
+select  e.car_id,c.part_id,d.price,e.technical_id, count(c.part_id),sum(d.price) as to_be_paid
+from use_parts c full outer join  spare_parts d 
+on  d.part_id=c.part_id
+full outer join service_paper d
+ on  d.part_id=c.part_id
+And d.technical_id=c.technical_id
+
+ full outer join repair_car e
+ on  e.technical_id=c.technical_id
+ HAVING COUNT(e.car_id) >= 1
+group by c.part_id,d.price,e.car_id ,e.technical_id;
+
+
+-------------------------------------------------------
+/**  pl sql **/
+ /**  procedures **/
+
+create or replace procedure sales_update ( Ssales_id number    ,SSame varchar   , Ssales_salary number  )
+    as 
+    begin
+    UPDATE sales  SET  NAM_of_sales=SSame,  sales_salary=Ssales_salary   WHERE Ssales_id = sales_id;
+        dbms_output.put_line('Studend with ID '||Ssales_id||' updated as the follwing : NAM_of_sales: '||SSame||'sales_salary :'||Ssales_salary);
+
+     end;
+     
+     ---------------------------------------------------------------------------------------
+       /**  test function **/
+
+exec sales_update  (5 ,'ahmed moshamed',1151);
+ select* from sales ;
+ 
+-----------------------------------------------
+        /** pl sql to know no_of_tech_who_repaird_cars and dont use spare parts  **/
+
+ create or replace function no_of_tech_who_repaird_cars(tech_id   number ) return number 
+is 
+ total number ;
+    begin 
+    select count(technical_id)
+     into  total
+   
+     from repair_car
+     where technical_id=tech_id;
+     return total ;
+                  end; 
+                  
+ ---------------------
+       /** test no_of_tech_who_repaird_carsl **/
+ select  technical_id  ,no_of_tech_who_repaird_cars(technical_id) 
+from repair_car 
+where no_of_tech_who_repaird_cars(technical_id) >= 1
+group by technical_id;
+/******triggers******/
+create table  sub_audit(Sub_Id number,old_price number,new_price number);
+update spare_parts set price=2000 where part_id=20;
+ create or replace trigger a_price before update on spare_parts
+for each row
+ begin
+    insert into sub_audit(Sub_Id,old_price,new_price)
+    values (:new.part_id,:old.price,:new.price );
+  end;
+/******test triggers******/
+select * from sub_audit  ;
+drop table sub_audit;
